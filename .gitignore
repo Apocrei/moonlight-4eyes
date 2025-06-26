@@ -1,0 +1,9 @@
+# macOS files
+.DS_Store
+
+# Editor swap files
+*~
+*.swp
+
+# Node modules (if any)
+node_modules/
