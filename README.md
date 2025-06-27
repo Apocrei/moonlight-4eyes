@@ -6,7 +6,7 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 **Requirements:**
 1. SteamOS
 2. Standard Flatpack install of Moonlight
-3. Optional - MoonDeck Plugin - see step 2 of "Post-install config instructions"
+3. Optional - MoonDeck Plugin - see step 2 of "Post-install Setup"
 
 **Installation Options:**
 
@@ -20,7 +20,7 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
   cd moonlight-wrapper
   ./install.sh
 
-**Post-install config instructions:**
+**Post-install Setup:**
 
 1. **In SteamOS Desktop Mode**  
    - Open **Steam** Go to **Games → Add a Non-Steam Game**  
