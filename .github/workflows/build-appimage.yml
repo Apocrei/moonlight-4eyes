@@ -35,9 +35,11 @@ jobs:
           # optional: copy an icon if you have one
           # cp assets/icon.png AppDir/usr/share/icons/hicolor/512x512/apps/moonlight-wrapper.png
 
-      - name: Build AppImage
+       - name: Build AppImage
         run: |
-          ./appimagetool-x86_64.AppImage AppDir
+          # explicitly set ARCH so AppImage knows we’re targeting x86_64
+          ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
+
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
