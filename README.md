@@ -35,6 +35,6 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 
 That’s all—
 
-Going forward, every way you launch Moonlight (terminal, desktop menu, Game Mode, panel shortcut, controller) will auto-update the `fps=` setting in your config before starting.  
+Going forward, whenever you launch Moonlight this program will automatically set the Moonlight framerate cap to you current refresh rate.  
 
 
