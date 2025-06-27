@@ -30,11 +30,11 @@ jobs:
           # Copy your wrapper and installer scripts
           cp wrapper.sh install.sh AppDir/
           # Create the AppRun stub
-          cat > AppDir/AppRun << 'EOF'
-#!/usr/bin/env bash
-DIR="$(dirname "$(readlink -f "$0")")"
-bash "$DIR/install.sh"
-EOF
+          cat << 'EOF' > AppDir/AppRun
+          #!/usr/bin/env bash
+          DIR="$(dirname "$(readlink -f "$0")")"
+          bash "$DIR/install.sh"
+          EOF
           chmod +x AppDir/AppRun
 
       - name: Build AppImage
