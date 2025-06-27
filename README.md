@@ -35,6 +35,6 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 
 That’s all—
 
-Going forward, whenever you launch Moonlight this program will automatically set the Moonlight framerate cap to you current refresh rate.  
+Going forward, whenever you launch Moonlight, this program will automatically set the Moonlight framerate cap to you current refresh rate.  
 
 
