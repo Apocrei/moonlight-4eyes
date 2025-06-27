@@ -23,7 +23,6 @@ jobs:
 
       - name: Prepare AppDir
         run: |
-          mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
           # Copy and sanitize the desktop file (must be named *.desktop)
           cp moonlight.desktop AppDir/
           sed -i '/^Icon=/d' AppDir/moonlight.desktop
