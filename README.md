@@ -6,6 +6,6 @@ launching the Flatpak client.
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/moonlight-wrapper.git
+git clone https://github.com/Apocrei/moonlight-wrapper.git
 cd moonlight-wrapper
 ./install.sh
