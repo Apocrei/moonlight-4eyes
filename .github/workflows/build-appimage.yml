@@ -2,6 +2,7 @@ name: Build AppImage
 
 on:
   push:
+    # trigger when you tag a new release, e.g. v1.2.3
     tags:
       - 'v*.*.*'
 
@@ -13,8 +14,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Install FUSE (for AppImage)
-        run: sudo apt-get update && sudo apt-get install -y libfuse2
+      - name: Install FUSE and curl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse2 curl
 
       - name: Download appimagetool
         run: |
@@ -23,12 +26,33 @@ jobs:
 
       - name: Prepare AppDir
         run: |
-          # Create AppDir directory
+          # clean any previous build
+          rm -rf AppDir
           mkdir -p AppDir
 
-          # Copy and sanitize the desktop file (must be named *.desktop)
-          cp moonlight.desktop AppDir/
-          sed -i '/^Icon=/d' AppDir/moonlight.desktop
+          # strip out Icon= (we don’t bundle an icon)
+          sed '/^Icon=/d' moonlight.desktop > AppDir/moonlight.desktop
 
-          # Copy your wrapper and installer scripts
-          cp wrapper.sh install.sh A
+          # copy your scripts
+          cp wrapper.sh install.sh AppDir/
+          chmod +x AppDir/wrapper.sh AppDir/install.sh
+
+          # AppRun stub: when user double-clicks the .AppImage, run install.sh
+          cat > AppDir/AppRun << 'EOF'
+#!/usr/bin/env bash
+DIR="$(dirname "$(readlink -f "$0")")"
+"$DIR/install.sh"
+EOF
+          chmod +x AppDir/AppRun
+
+      - name: Build AppImage
+        run: |
+          ARCH=x86_64 ./appimagetool-x86_64.AppImage \
+            AppDir \
+            moonlight-wrapper-$ARCH.AppImage
+
+      - name: Upload AppImage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlight-wrapper.AppImage
+          path: moonlight-wrapper-x86_64.AppImage
