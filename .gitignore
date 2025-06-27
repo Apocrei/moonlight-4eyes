@@ -6,4 +6,4 @@
 *.swp
 
 # Node modules (if any)
-node_modules/
+node_modules/moonlight-wrapper.run
