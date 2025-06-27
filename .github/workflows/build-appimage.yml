@@ -31,31 +31,4 @@ jobs:
           sed -i '/^Icon=/d' AppDir/moonlight.desktop
 
           # Copy your wrapper and installer scripts
-          cp wrapper.sh install.sh AppDir/
-
-          # Create the AppRun stub
-          cat << 'EOF' > AppDir/AppRun
-#!/usr/bin/env bash
-DIR="$(dirname "$(readlink -f "$0")")"
-bash "$DIR/install.sh"
-EOF
-          chmod +x AppDir/AppRun
-
-      - name: Build AppImage
-        run: |
-          # explicitly set architecture
-          ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
-
-      - name: Publish to GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          name: moonlight-wrapper.AppImage
-          tag_name: ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload AppImage artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: moonlight-wrapper.AppImage
-          path: moonlight-wrapper-x86_64.AppImage
+          cp wrapper.sh install.sh A
