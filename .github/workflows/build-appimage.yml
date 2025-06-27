@@ -23,17 +23,22 @@ jobs:
 
       - name: Prepare AppDir
         run: |
+          # Create AppDir directory
+          mkdir -p AppDir
+
           # Copy and sanitize the desktop file (must be named *.desktop)
           cp moonlight.desktop AppDir/
           sed -i '/^Icon=/d' AppDir/moonlight.desktop
+
           # Copy your wrapper and installer scripts
           cp wrapper.sh install.sh AppDir/
+
           # Create the AppRun stub
           cat << 'EOF' > AppDir/AppRun
-          #!/usr/bin/env bash
-          DIR="$(dirname "$(readlink -f "$0")")"
-          bash "$DIR/install.sh"
-          EOF
+#!/usr/bin/env bash
+DIR="$(dirname "$(readlink -f "$0")")"
+bash "$DIR/install.sh"
+EOF
           chmod +x AppDir/AppRun
 
       - name: Build AppImage
