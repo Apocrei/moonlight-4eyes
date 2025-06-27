@@ -11,8 +11,9 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 **Installation Options:**
 
 - **Option 1 – Download & run the self-extracting installer**  
-  1. [Download the `moonlight-wrapper.run` from Releases](https://github.com/Apocrei/moonlight-wrapper/releases/latest)  
-  2. Run it
+  1. [Download the `moonlight-wrapper.run` from Releases](https://github.com/Apocrei/moonlight-wrapper/releases/latest)
+  2. Make it executable (in your file manager, Properties → Permissions → “Allow executing as program”)    
+  3. Run it
 
 - **Option 2 – Clone the repo & run `install.sh`**  
   ```bash
