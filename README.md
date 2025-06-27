@@ -16,5 +16,23 @@ launching the Flatpak client.
   cd moonlight-wrapper
   ./install.sh
 
+**Post-install config instructions**
+
+Next steps:
+
+1. **In Steam Desktop Mode**  
+   - Go to **Games → Add a Non-Steam Game**  
+   - Browse to `$HOME/bin/moonlight` and click **Add**.
+
+2. **In MoonDeck’s settings**  
+   - Find the **Moonlight executable** field  
+   - Enter:  
+     ```
+     $HOME/bin/moonlight
+     ```
+
+That’s all—
+
+Going forward, every way you launch Moonlight (terminal, desktop menu, Game Mode, panel shortcut, controller) will auto-update the `fps=` setting in your config before starting.  
 
 
