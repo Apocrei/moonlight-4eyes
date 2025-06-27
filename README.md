@@ -1,14 +1,17 @@
 # Moonlight FPS-Auto Wrapper
 
-Automatically rounds your display’s refresh rate and updates your `Moonlight.conf` before
-launching the Flatpak client.
+Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will automatically change the Moonlight FPS cap to the client device's refresh rate via modification of the `Moonlight.conf'. This, among other best practices, is necessary to acheive the smoothest possible streaming experience.
+
+**Requirements:**
+1. SteamOS
+2. Standard Flatpack install of Moonlight
+3. Optional - MoonDeck Plugin - see step 2 of "Post-install config instructions"
 
 **Installation Options:**
 
 - **Option 1 – Download & run the self-extracting installer**  
   1. [Download the `.run` from Releases](https://github.com/Apocrei/moonlight-wrapper/releases/latest)  
-  2. Allow “Execute as program” in your file manager  
-  3. Double-click the `.run` (no terminal needed)
+  2. Run it
 
 - **Option 2 – Clone the repo & run `install.sh`**  
   ```bash
@@ -16,13 +19,13 @@ launching the Flatpak client.
   cd moonlight-wrapper
   ./install.sh
 
-**Post-install config instructions**
+**Post-install config instructions:**
 
-1. **In Steam Desktop Mode**  
-   - Go to **Games → Add a Non-Steam Game**  
+1. **In SteamOS Desktop Mode**  
+   - Open **Steam** Go to **Games → Add a Non-Steam Game**  
    - Browse to `$HOME/bin/moonlight` and click **Add**.
 
-2. **In MoonDeck’s settings**  
+2. **In MoonDeck’s settings (optional)**  
    - Find the **Moonlight executable** field  
    - Enter:  
      ```
