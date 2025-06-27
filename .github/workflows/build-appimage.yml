@@ -24,15 +24,11 @@ jobs:
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
-
-          # Copy and sanitize the desktop file:
+          # Copy and sanitize the desktop file (must be named *.desktop)
           cp moonlight.desktop AppDir/
-          # Remove any Icon= line, since we don't bundle a matching icon
           sed -i '/^Icon=/d' AppDir/moonlight.desktop
-
-          # Copy your scripts into AppDir
+          # Copy your wrapper and installer scripts
           cp wrapper.sh install.sh AppDir/
-
           # Create the AppRun stub
           cat > AppDir/AppRun << 'EOF'
 #!/usr/bin/env bash
