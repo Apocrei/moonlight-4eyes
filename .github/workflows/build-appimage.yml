@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
           # copy your scripts and desktop template
-          cp wrapper.sh install.sh moonlight.desktop.template AppDir/
+          cp wrapper.sh install.sh moonlight.desktop AppDir/
           # write AppRun
           cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
