@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - name: Set up FUSE (for AppImage)
+      - name: Install FUSE (for AppImage)
         run: sudo apt-get update && sudo apt-get install -y libfuse2
 
       - name: Download appimagetool
@@ -23,23 +24,24 @@ jobs:
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
-          # copy your scripts and desktop template
-          cp wrapper.sh install.sh moonlight.desktop AppDir/
-          # write AppRun
+          # Copy the desktop file (must be named *.desktop)
+          cp moonlight.desktop AppDir/
+          # Copy your scripts
+          cp wrapper.sh install.sh AppDir/
+          # Create the AppRun stub
           cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
           DIR="$(dirname "$(readlink -f "$0")")"
           bash "$DIR/install.sh"
           EOF
           chmod +x AppDir/AppRun
-          # optional: copy an icon if you have one
+          # (Optional) copy an icon if you have one:
           # cp assets/icon.png AppDir/usr/share/icons/hicolor/512x512/apps/moonlight-wrapper.png
 
-       - name: Build AppImage
+      - name: Build AppImage
         run: |
-          # explicitly set ARCH so AppImage knows we’re targeting x86_64
+          # Ensure aarch64 or x86_64 is explicit; here we target x86_64
           ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
-
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
@@ -49,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload AppImage as Artifact
+      - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
         with:
           name: moonlight-wrapper.AppImage
