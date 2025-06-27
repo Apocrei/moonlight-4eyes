@@ -22,13 +22,13 @@ Next steps:
 
 1. **In Steam Desktop Mode**  
    - Go to **Games → Add a Non-Steam Game**  
-   - Browse to `$HOME/deck/bin/moonlight` and click **Add**.
+   - Browse to `$HOME/bin/moonlight` and click **Add**.
 
 2. **In MoonDeck’s settings**  
    - Find the **Moonlight executable** field  
    - Enter:  
      ```
-     $HOME/deck/bin/moonlight
+     $HOME/bin/moonlight
      ```
 
 That’s all—
