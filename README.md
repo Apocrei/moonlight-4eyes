@@ -18,8 +18,6 @@ launching the Flatpak client.
 
 **Post-install config instructions**
 
-Next steps:
-
 1. **In Steam Desktop Mode**  
    - Go to **Games → Add a Non-Steam Game**  
    - Browse to `$HOME/bin/moonlight` and click **Add**.
