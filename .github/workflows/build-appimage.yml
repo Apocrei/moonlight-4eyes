@@ -24,23 +24,26 @@ jobs:
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
-          # Copy the desktop file (must be named *.desktop)
+
+          # Copy and sanitize the desktop file:
           cp moonlight.desktop AppDir/
-          # Copy your scripts
+          # Remove any Icon= line, since we don't bundle a matching icon
+          sed -i '/^Icon=/d' AppDir/moonlight.desktop
+
+          # Copy your scripts into AppDir
           cp wrapper.sh install.sh AppDir/
+
           # Create the AppRun stub
           cat > AppDir/AppRun << 'EOF'
-          #!/usr/bin/env bash
-          DIR="$(dirname "$(readlink -f "$0")")"
-          bash "$DIR/install.sh"
-          EOF
+#!/usr/bin/env bash
+DIR="$(dirname "$(readlink -f "$0")")"
+bash "$DIR/install.sh"
+EOF
           chmod +x AppDir/AppRun
-          # (Optional) copy an icon if you have one:
-          # cp assets/icon.png AppDir/usr/share/icons/hicolor/512x512/apps/moonlight-wrapper.png
 
       - name: Build AppImage
         run: |
-          # Ensure aarch64 or x86_64 is explicit; here we target x86_64
+          # explicitly set architecture
           ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
 
       - name: Publish to GitHub Releases
