@@ -11,7 +11,7 @@ install -m 0755 wrapper.sh "$HOME/bin/moonlight"
 DESKTOP_DIR="$HOME/.local/share/applications"
 mkdir -p "$DESKTOP_DIR"
 sed "s|{{WRAPPER_PATH}}|$HOME/bin/moonlight|g" \
-    moonlight.desktop.template \
+    moonlight.desktop \
   > "$DESKTOP_DIR/com.moonlight_stream.Moonlight.desktop"
 
 # 4) update desktop database if available
