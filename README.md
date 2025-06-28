@@ -8,14 +8,9 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 2. Standard Flatpack install of Moonlight
 3. Optional - MoonDeck Plugin - see step 2 of "Post-install Setup"
 
-**Installation Options:**
+**Installation:**
 
-- **Option 1 – Download & run the self-extracting installer**  
-  1. [Download the `moonlight-wrapper.run` from Releases](https://github.com/Apocrei/moonlight-wrapper/releases/latest)
-  2. Make it executable (in your file manager, Properties → Permissions → “Allow executing as program”)    
-  3. Run it
-
-- **Option 2 – Clone the repo & run `install.sh`**  
+- **Clone the repo & run `install.sh`**  
   ```bash
   git clone https://github.com/Apocrei/moonlight-wrapper.git
   cd moonlight-wrapper
@@ -36,6 +31,12 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 
 That’s all—
 
-Going forward, whenever you launch Moonlight, this program will automatically set the Moonlight framerate cap to the refresh rate of your client-side display.  
+Going forward, whenever you launch Moonlight, this program will automatically set the Moonlight framerate cap to the refresh rate of your client-side display. 
 
 
+**Uninstall:**
+
+- **Run `uninstall.sh`**  
+  ```bash
+  cd moonlight-wrapper
+  ./uninstall.sh
