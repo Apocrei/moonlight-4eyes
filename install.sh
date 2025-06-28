@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 # 1) ensure ~/bin exists
 mkdir -p "$HOME/bin"
