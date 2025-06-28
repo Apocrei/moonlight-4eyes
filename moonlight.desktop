@@ -1,10 +1,7 @@
 [Desktop Entry]
 Name=Moonlight
-Comment=Stream games via Sunshine or GeForce Experience
-Exec={{WRAPPER_PATH}} %U
+Comment=Moonlight streaming client with FPS override
+Exec=bash -c 'if [ -x "$HOME/bin/moonlight" ]; then exec "$HOME/bin/moonlight" "$@"; else exec flatpak run com.moonlight_stream.Moonlight "$@"; fi' -- %U
 Icon=com.moonlight_stream.Moonlight
-Terminal=false
 Type=Application
-Categories=Qt;Game;
-Keywords=nvidia;gamestream;stream;sunshine;remote play;
-X-Flatpak=com.moonlight_stream.Moonlight
+Categories=Game;Application;
