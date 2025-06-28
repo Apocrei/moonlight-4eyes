@@ -1,28 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# 1) ensure ~/bin exists
+echo "🔧 Installing Moonlight Wrapper…"
+
+# 1) Ensure your personal bin directory exists
 mkdir -p "$HOME/bin"
 
-# 2) install the wrapper
-install -m 0755 wrapper.sh "$HOME/bin/moonlight"
+# 2) Install the wrapper script
+install -m 0755 wrapper.sh "$HOME/bin/moonlight" \
+  && echo "  ✔ Installed wrapper to $HOME/bin/moonlight"
 
-# 3) copy & patch the .desktop
+# 3) Install the desktop entry override (now containing fallback logic)
 DESKTOP_DIR="$HOME/.local/share/applications"
 mkdir -p "$DESKTOP_DIR"
-sed "s|{{WRAPPER_PATH}}|$HOME/bin/moonlight|g" \
-    moonlight.desktop \
-  > "$DESKTOP_DIR/com.moonlight_stream.Moonlight.desktop"
+cp moonlight.desktop.template \
+   "$DESKTOP_DIR/com.moonlight_stream.Moonlight.desktop" \
+   && echo "  ✔ Installed desktop override"
 
-# 4) update desktop database if available
+# 4) Update desktop database
 if command -v update-desktop-database &>/dev/null; then
-  update-desktop-database "$DESKTOP_DIR"
+  update-desktop-database "$DESKTOP_DIR" \
+    && echo "  ✔ Refreshed desktop database"
+else
+  echo "  ↷ update-desktop-database not found, skipping"
 fi
 
-cat <<EOF
+echo -e "\n✅ Install complete."
 
-✅ Installed wrapper to: $HOME/bin/moonlight  
-✅ Overrode .desktop in: $DESKTOP_DIR/com.moonlight_stream.Moonlight.desktop  
+cat <<EOF
 
 Next steps:
 
