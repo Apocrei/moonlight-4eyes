@@ -12,7 +12,7 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 
 - **Clone the repo & run `install.sh`**  
   ```bash
-  git clone https://github.com/Apocrei/moonlight-wrapper.git
+  git clone https://github.com/Apocrei/moonlight-4eyes.git
   cd moonlight-wrapper
   ./install.sh
 
