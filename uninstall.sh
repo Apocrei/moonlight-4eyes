@@ -36,5 +36,3 @@ else
 fi
 
 echo -e "\n✅ Uninstall complete."
-echo "▶ To launch native Moonlight from now on, run:"
-echo "   flatpak run com.moonlight_stream.Moonlight"
