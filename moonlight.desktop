@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Moonlight
 Comment=Stream games via Sunshine or GeForce Experience
-Exec=bash -c 'if [ -x "$HOME/bin/moonlight" ]; then exec "$HOME/bin/moonlight" "$@"; else exec flatpak run com.moonlight_stream.Moonlight "$@"; fi' -- %U
+Exec={{WRAPPER_PATH}} %U
 Icon=com.moonlight_stream.Moonlight
 Terminal=false
 Type=Application
