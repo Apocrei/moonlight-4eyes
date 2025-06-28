@@ -26,14 +26,3 @@ else
 fi
 
 echo -e "\n✅ Install complete."
-
-
-Next steps:
-
-1. In Steam Desktop Mode → Games → Add a Non-Steam Game → Browse to “$HOME/bin/moonlight” → Add.  
-2. In MoonDeck’s settings, point “Moonlight executable” to:
-   $HOME/bin/moonlight  
-
-Now every launch—terminal, menu, Game Mode or shortcut—will refresh your fps= setting automatically.  
-
-EOF
