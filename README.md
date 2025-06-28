@@ -1,6 +1,6 @@
 <!-- badge-style for a small logo -->
 <p align="center">
-  <img src="images/logo.png" alt="Moonlight Wrapper logo" width="120"/>
+  <img src="images/moonlight-4eyes.png" alt="Moonlight Wrapper logo" width="120"/>
 </p>
 
 # Moonlight Wrapper
