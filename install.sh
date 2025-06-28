@@ -27,8 +27,6 @@ fi
 
 echo -e "\n✅ Install complete."
 
-fi
-
 cat <<EOF
 
 Next steps:
