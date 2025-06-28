@@ -1,11 +1,11 @@
 # Moonlight FPS-Auto Wrapper
 
-**What is does:**
-Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will automatically change the Moonlight FPS cap to the client device's refresh rate via modification of the `Moonlight.conf' file. Combining this wrapper with Host-side FPS limiters such as Qres.exe or [frl-toggle (for Nvidia users)](https://github.com/FrogTheFrog/frl-toggle), will help you acheive the smoothest possible streaming experience. 
+**What it does:**
+Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will automatically change the Moonlight FPS cap to the client device's refresh rate via modification of the `Moonlight.conf' file. Combining this wrapper with Host-side FPS limiters such as Qres.exe or [frl-toggle (for Nvidia users)](https://github.com/FrogTheFrog/frl-toggle), will help you achieve the smoothest possible streaming experience. 
 
 **Requirements:**
 1. SteamOS
-2. Standard Flatpack install of Moonlight
+2. Standard Flatpak install of Moonlight
 3. Optional - MoonDeck Plugin - see step 2 of "Post-install Setup"
 
 **Installation:**
