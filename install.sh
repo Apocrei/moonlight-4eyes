@@ -13,7 +13,7 @@ install -m 0755 wrapper.sh "$HOME/bin/moonlight" \
 # 3) Install the desktop entry override with built-in fallback logic
 DESKTOP_DIR="$HOME/.local/share/applications"
 mkdir -p "$DESKTOP_DIR"
-cp moonlight.desktop.template \
+cp moonlight.desktop \
    "$DESKTOP_DIR/com.moonlight_stream.Moonlight.desktop" \
    && echo "  ✔ Installed desktop override"
 
