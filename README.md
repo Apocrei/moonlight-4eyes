@@ -13,7 +13,7 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 - **Clone the repo & run `install.sh`**  
   ```bash
   git clone https://github.com/Apocrei/moonlight-4eyes.git
-  cd moonlight-wrapper
+  cd moonlight-4eyes
   ./install.sh
 
 **Post-install Setup:**
@@ -38,7 +38,7 @@ Going forward, whenever you launch Moonlight, this program will automatically se
 
 - **Run `uninstall.sh`**  
   ```bash
-  cd moonlight-wrapper
+  cd moonlight-4eyes
   ./uninstall.sh
 
 Note: Any desktop or menu shortcuts created while the wrapper was installed may no longer work after the wrapper has been uninstalled. Simply delete these shortcuts and create new ones as needed.
