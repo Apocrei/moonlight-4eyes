@@ -1,5 +1,5 @@
 <!-- badge-style for a small logo -->
-<p align="leftr">
+<p align="left">
   <img src="images/moonlight-4eyes.png" alt="Moonlight Wrapper logo" width="120"/>
 </p>
 
