@@ -35,4 +35,27 @@ else
   echo "  ↷ Config file not found, skipping fps cleanup"
 fi
 
+# 5) Update desktop database to remove stale entries
+DESKTOP_DIR="$HOME/.local/share/applications"
+if command -v update-desktop-database &>/dev/null; then
+  update-desktop-database "$DESKTOP_DIR"
+  echo "  ✔ Refreshed desktop database"
+else
+  echo "  ↷ update-desktop-database not found, skipping desktop database update"
+fi
+
+# 6) Remove the backup config file created during uninstall
+if rm -fv "$CONF.bak"; then
+  echo "  ✔ Removed config backup file"
+else
+  echo "  ↷ No config backup file found, skipping"
+fi
+
+# 7) Remove the bin folder if it’s now empty
+if rmdir --ignore-fail-on-non-empty "$HOME/bin"; then
+  echo "  ✔ Removed empty ~/bin directory"
+else
+  echo "  ↷ ~/bin not empty or not present, skipping"
+fi
+
 echo -e "\n✅ Uninstall complete."
