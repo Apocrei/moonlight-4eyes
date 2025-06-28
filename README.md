@@ -4,7 +4,8 @@
 </p>
 
 
-# Moonlight-4eyes (automatically lock the Moonlight FPS cap to the primary display's refresh rate)
+# Moonlight-4eyes 
+(automatically lock the Moonlight FPS cap to the primary display's refresh rate)
 
 **What it does:**
 Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will automatically change the Moonlight FPS cap to the client device's refresh rate via modification of the `Moonlight.conf' file. Combining this wrapper with Host-side FPS limiters such as Qres.exe or [frl-toggle (for Nvidia users)](https://github.com/FrogTheFrog/frl-toggle), will help you achieve the smoothest possible streaming experience. 
