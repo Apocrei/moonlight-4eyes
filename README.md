@@ -40,3 +40,5 @@ Going forward, whenever you launch Moonlight, this program will automatically se
   ```bash
   cd moonlight-wrapper
   ./uninstall.sh
+
+Any desktop or menu shortcuts created while the wrapper was installed may no longer work after you uninstall it. Simply delete these shortcuts and create new ones as needed.
