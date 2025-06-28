@@ -1,3 +1,12 @@
+<!-- badge-style for a small logo -->
+<p align="center">
+  <img src="images/logo.png" alt="Moonlight Wrapper logo" width="120"/>
+</p>
+
+# Moonlight Wrapper
+…rest of your intro…
+
+
 # Moonlight FPS-Auto Wrapper
 
 **What it does:**
