@@ -24,11 +24,11 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 
 **Post-install Setup:**
 
-1. **In SteamOS Desktop Mode**  
-   - Open **Steam** Go to **Games → Add a Non-Steam Game**  
-   - Browse to `$HOME/bin/moonlight` and click **Add**.
+1. **In SteamOS Desktop Mode**
+Note: Only shortcuts created after installing the wrapper will have the auto-fps functionl. If Moonlight was added to your Steam library prior installing this tool, you will need to remove it (can be done before or after installing the wrapper) and then add it again. 
+   - Open **Steam** Go to **Games → Add a Non-Steam Game → select Moonlight → Add Selected Programs**  
 
-2. **In MoonDeck’s settings (optional)**  
+3. **In MoonDeck’s settings (optional)**  
    - Find the **Moonlight executable** field  
    - Enter:  
      ```
