@@ -13,7 +13,7 @@ Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will aut
 Whenever you launch Moonlight, this wrapper kicks in—reads your current SteamOS refresh rate, patches `Moonlight.conf` to set the streaming framerate accordingly, and then starts Moonlight.
 
 - **Host-limited case**  
-  If your PC can only stream at, say, 100 FPS but your SteamOS display is set to 120 Hz, you only need to change the SteamOS refresh rate—Moonlight’s streaming framerate will automatically update to match. No manual edits or menu diving required.
+  If your PC can only stream at, say, 60 FPS but your SteamOS display is set to 144hz Hz, you only need to change the SteamOS refresh rate—Moonlight’s streaming framerate will automatically update to match. No manual edits or menu diving required.
 
 - **High-performance case**  
   Conversely, if your host and display both support, say, 144 FPS/Hz but Moonlight is still capped at 60, the wrapper will bump Moonlight’s streaming framerate up to match your display rate on each launch. If you frequently switch refresh rates for different games, this makes everything seamless—you never have to reconfigure anything afterward.  
