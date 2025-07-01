@@ -49,7 +49,11 @@ That’s all—
 
 Going forward, whenever you launch Moonlight, this program will automatically set the Moonlight framerate cap to the refresh rate of your client-side display. 
 
-
+**Notes:**
+  - Only shortcuts created after installing the wrapper will invoke the auto-fps function. If a Moonlight shortcut was added to your Steam library prior installing this tool, you will need to remove it (can be done before or after installing the wrapper) and then add it again.
+  - Once installed, Moonlight will always default to your current refresh rate upon opening the app. You can still temporarily change Moonlight's FPS setting once the app is open, but that setting will revert back to your display's refresh rate whenever you load the app again.
+  - Combining this tool with a host-side FPS limiter such as Qres.exe or frl-toggle (for Nvidia users), will help you achieve the smoothest possible streaming experience.
+  
 **Uninstall:**
 
 - **Run `uninstall.sh`**  
