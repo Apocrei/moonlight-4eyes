@@ -72,6 +72,13 @@ $HOME/bin/moonlight
 ```
 $HOME/bin/moonlight
 ```
+### 3. In Gaming Mode, enable the per-game performance profile
+After launching Moonlight once from Gaming Mode:
+- Press the **"..." Quick Access button**
+- Scroll down to **Performance**
+- Enable **"Use per-game profile"**
+
+⚠️ This is required for SteamOS to track the FPS cap and write it to the system log, which the wrapper reads to sync `Moonlight.conf`.
 
 ---
 
