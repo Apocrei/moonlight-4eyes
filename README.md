@@ -3,62 +3,105 @@
   <img src="images/moonlight-4eyes.png" alt="Moonlight Wrapper logo" width="120"/>
 </p>
 
+# Moonlight-4eyes
 
-# Moonlight-4eyes 
+**What it does:**  
+Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper automatically updates the `fps=` value in `Moonlight.conf` to match the client device’s refresh rate.  
+This ensures smooth, tear-free streaming — no need to dig into menus or config files.
 
-**What it does:**
-Anytime the Moonlight Flatpak client is opened in SteamOS, this wrapper will automatically change the Moonlight FPS cap to the client device's refresh rate via modification of the `Moonlight.conf' file. Combining this wrapper with a Host-side FPS limiter such as Qres.exe or [frl-toggle (for Nvidia users)](https://github.com/FrogTheFrog/frl-toggle), will help you achieve the smoothest possible streaming experience. 
+The wrapper detects your mode and adjusts accordingly:
+- In **Desktop Mode**, it uses your display's current refresh rate via `xrandr`
+- In **Gaming Mode**, it pulls the most recent AppID from `screenshots.vdf` and extracts the last Gamescope FPS cap from `steamui_system.txt`
+
+Combine this with a host-side FPS limiter like **Qres.exe** or [**frl-toggle** (Nvidia)](https://github.com/FrogTheFrog/frl-toggle) for best results.
+
+---
 
 **When it’s useful:**
-Whenever you launch Moonlight, this wrapper kicks in—reads your current SteamOS refresh rate, patches `Moonlight.conf` to set the streaming framerate accordingly, and then starts Moonlight.
 
-- **Host-limited case**  
-  If your PC can only stream at, say, 60 FPS but your SteamOS display is set to 144 Hz, you only need to change the SteamOS refresh rate—Moonlight’s streaming framerate will automatically update to match. No manual edits or menu diving required.
+Whenever you launch Moonlight, this wrapper:
+1. Detects your current SteamOS refresh rate **or** your latest Gamescope FPS cap
+2. Writes it to `Moonlight.conf`
+3. Launches Moonlight seamlessly
 
-- **High-performance case**  
-  Conversely, if your host and display both support, say, 144 FPS/Hz but Moonlight is still capped at 60, the wrapper will bump Moonlight’s streaming framerate up to match your display rate on each launch. If you frequently switch refresh rates for different games, this makes everything seamless—you never have to reconfigure anything afterward.  
+**Host-limited case**  
+If your PC can only stream at 60 FPS but your Steam Deck is set to 144 Hz, you just change your Deck’s refresh rate — this wrapper ensures Moonlight matches it automatically.
 
+**High-performance case**  
+If your host and Deck both support 144 FPS/Hz but Moonlight is stuck at 60, this wrapper bumps it to 144. No more toggling menus or re-editing config files after every rate switch.
+
+---
 
 **Requirements:**
 1. SteamOS
-2. Standard Flatpak install of Moonlight
-3. Optional - MoonDeck Plugin - see step 2 of "Post-install Setup"
+2. Flatpak install of Moonlight
+3. (Optional) MoonDeck Plugin — see step 3 of Post-install Setup
 
-**Installation:**
+---
 
-- **Clone the repo & run `install.sh`**  
-  ```bash
-  git clone https://github.com/Apocrei/moonlight-4eyes.git
-  cd moonlight-4eyes
-  ./install.sh
+## 🚀 Installation
 
-**Post-install Setup:**
-</br></br>Please note, only shortcuts created after installing the wrapper will invoke the auto-fps function. If Moonlight was added to your Steam library prior installing this tool, you will need to remove it (can be done before or after installing the wrapper) and then add it again. 
+```
+git clone https://github.com/Apocrei/moonlight-4eyes.git
+cd moonlight-4eyes
+./install.sh
+```
 
-1. **In SteamOS Desktop Mode**
-   - Open **Steam** Go to **Games → Add a Non-Steam Game → select Moonlight → Add Selected Programs**  
+---
 
-3. **In MoonDeck’s settings (optional)**  
-   - Find the **Moonlight executable** field  
-   - Enter:  
-     ```
-     $HOME/bin/moonlight
-     ```
+## 🔧 Post-install Setup
 
-That’s all—
+⚠️ Only shortcuts created *after* installing the wrapper will invoke auto-FPS sync.  
+If Moonlight was added to your Steam library earlier, remove and re-add it.
 
-Going forward, whenever you launch Moonlight, this program will automatically set the Moonlight framerate cap to the refresh rate of your client-side display. 
+### 1. In SteamOS Desktop Mode
+- Open **Steam**
+- Go to **Games → Add a Non-Steam Game**
+- Browse to:
 
-**Notes:**
-  - Only shortcuts created after installing the wrapper will invoke the auto-fps function. If a Moonlight shortcut was added to your Steam library prior installing this tool, you will need to remove it (can be done before or after installing the wrapper) and then add it again.
-  - Once installed, Moonlight will always default to your current refresh rate upon opening the app. You can still temporarily change Moonlight's FPS setting once the app is open, but that setting will revert back to your display's refresh rate whenever you load the app again.
-  - Combining this tool with a host-side FPS limiter such as Qres.exe or frl-toggle (for Nvidia users), will help you achieve the smoothest possible streaming experience.
-  
-**Uninstall:**
+```
+$HOME/bin/moonlight
+```
 
-- **Run `uninstall.sh`**  
-  ```bash
-  cd moonlight-4eyes
-  ./uninstall.sh
+- Select and **Add**
 
-Note: Any desktop or menu shortcuts created while the wrapper was installed may no longer work after the wrapper has been uninstalled. Simply delete these shortcuts and create new ones as needed.
+### 2. In MoonDeck’s settings (optional)
+- Find the **Moonlight executable** field
+- Set it to:
+
+```
+$HOME/bin/moonlight
+```
+
+---
+
+## 🛠️ How it works behind the scenes
+
+- In Gaming Mode, the script finds your most recent Moonlight AppID from `screenshots.vdf`
+- Then parses `steamui_system.txt` to extract the last Gamescope framerate cap
+- That FPS is written into Moonlight’s config before the app launches
+
+---
+
+## ❌ Uninstall
+
+```
+cd moonlight-4eyes
+./uninstall.sh
+```
+
+Note: Any shortcuts created while the wrapper was active may break after uninstalling.  
+Just remove and recreate them as needed.
+
+---
+
+## 📝 Notes
+
+- Your Moonlight `fps=` will be automatically reset on every launch
+- You can manually change FPS within the app — but it will revert next time
+- Works best with a host-side FPS limiter to match the client rate
+- Supports multiple Steam users by detecting the most recent user ID from logs
+
+---
+
+🎮 Enjoy seamless Moonlight streaming!
