@@ -22,7 +22,7 @@ Combine this with a host-side FPS limiter like **Qres.exe** or [**frl-toggle** (
 Whenever you launch Moonlight, this wrapper:
 1. Detects your current SteamOS refresh rate **or** your latest Gamescope FPS cap
 2. Writes it to `Moonlight.conf`
-3. Launches Moonlight seamlessly
+3. Launches (or relaunches) Moonlight seamlessly
 
 **Host-limited case**  
 If your PC can only stream at 60 FPS but your Steam Deck is set to 144 Hz, you just change your Deck’s refresh rate — this wrapper ensures Moonlight matches it automatically.
