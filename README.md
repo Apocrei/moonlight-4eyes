@@ -56,14 +56,8 @@ If Moonlight was added to your Steam library earlier, remove and re-add it.
 
 ### 1. In SteamOS Desktop Mode
 - Open **Steam**
-- Go to **Games → Add a Non-Steam Game**
-- Browse to:
-
-```
-$HOME/bin/moonlight
-```
-
-- Select and **Add**
+- Go to **Library pane → Add a Game → Add a Non-Steam Game**
+- Select **Moonlight** and click **Add Selected Programs**
 
 ### 2. In MoonDeck’s settings (optional)
 - Find the **Moonlight executable** field
