@@ -65,15 +65,7 @@ $HOME/bin/moonlight
 
 - Select and **Add**
 
-### 2. In Gaming Mode, enable the per-game performance profile
-After launching Moonlight once from Gaming Mode:
-- Press the **"..." Quick Access button**
-- Scroll down to **Performance**
-- Enable **"Use per-game profile"**
-
-⚠️ This is required for SteamOS to track the FPS cap and write it to the system log, which the wrapper reads to sync `Moonlight.conf`.
-
-### 3. In MoonDeck’s settings (optional)
+### 2. In MoonDeck’s settings (optional)
 - Find the **Moonlight executable** field
 - Set it to:
 
@@ -105,10 +97,8 @@ Just remove and recreate them as needed.
 
 ## 📝 Notes
 
-- Your Moonlight `fps=` will be automatically reset on every launch
 - You can manually change FPS within the app — but it will revert next time
 - Works best with a host-side FPS limiter to match the client rate
-- Supports multiple Steam users by detecting the most recent user ID from logs
 
 ---
 
