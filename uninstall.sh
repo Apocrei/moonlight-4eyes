@@ -44,11 +44,4 @@ else
   echo "  ↷ update-desktop-database not found, skipping"
 fi
 
-# 5) Remove the bin folder if it’s now empty
-if rmdir --ignore-fail-on-non-empty "$HOME/bin"; then
-  echo "  ✔ Removed empty ~/bin directory"
-else
-  echo "  ↷ ~/bin not empty or not present, skipping"
-fi
-
 echo -e "\n✅ Uninstall complete."
