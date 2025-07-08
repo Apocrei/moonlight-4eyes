@@ -1,85 +1,132 @@
 #!/usr/bin/env bash
-#
-# wrapper.sh – Moonlight FPS = display refresh (desktop) or parsed from steamui_system.txt (gaming)
 
-: "${DEBUG:=false}"
-debug(){ [ "$DEBUG" = true ] && echo "[D] $*" >&2; }
+set -euo pipefail
 
-# 1) Detect display refresh rate
+# --- Clear previous log file ----------------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+: > "$SCRIPT_DIR/wrapper.log"
+
+# --- 1) Static variables & checks -------------------------------------------
+HOME_DIR="$HOME"
+
+# Moonlight config path
+CONF="$HOME_DIR/.var/app/com.moonlight_stream.Moonlight/config/Moonlight Game Streaming Project/Moonlight.conf"
+[[ -f "$CONF" ]] || { echo "[ERROR] Config not found at $CONF" >&2; exit 1; }
+
+# SteamUI log path (native or Flatpak)
+LOG="$HOME_DIR/.steam/steam/logs/steamui_system.txt"
+if [[ ! -f "$LOG" ]]; then
+  LOG="$HOME_DIR/.var/app/com.valvesoftware.Steam/data/Steam/logs/steamui_system.txt"
+fi
+[[ -f "$LOG" ]] || { echo "[ERROR] SteamUI log not found at $LOG" >&2; exit 1; }
+
+# --- 2) Log file creation ----------------------------------------------------
+LOGFILE="$SCRIPT_DIR/wrapper.log"
+
+wlog(){
+  local ts="[$(date +'%Y-%m-%d %H:%M:%S')]"
+  echo "${ts} $*" >&2
+  echo "${ts} $*" >>"$LOGFILE"
+}
+
+wlog "CHECK: HOME_DIR = $HOME_DIR"
+wlog "FOUND: CONF = $CONF"
+wlog "FOUND: STEAMUI_LOG = $LOG"
+
+# --- 3) Detect display FPS -------------------------------------------------
 RATE=$(xrandr | grep -Po '\d+\.\d+(?=\*)' | head -n1)
 DISPLAY_FPS=$(printf '%.0f' "${RATE:-0}")
-echo "→ Display refresh rate = ${DISPLAY_FPS} fps"
+wlog "CHECK: DISPLAY_FPS = ${DISPLAY_FPS} fps"
 
-# 2) Determine mode
+# --- 4) Mode decision -------------------------------------------------------
 if [[ "${SteamDeck:-0}" == "1" ]]; then
-  echo "→ Mode: GAMING (SteamDeck=1)"
   MODE=gaming
 else
-  echo "→ Mode: DESKTOP"
   MODE=desktop
 fi
+wlog "STATE: MODE = ${MODE^^}"
 
-# 3) Mode-specific logic
+# --- 5) Desktop mode --------------------------------------------------------
 if [[ "$MODE" == "desktop" ]]; then
-  FPS="$DISPLAY_FPS"
-  echo "→ Chosen FPS = $FPS"
-else
-  # --- Inline moon-fps.sh logic ---
-  VDF=$(find "$HOME/.local/share/Steam/userdata" -path '*/760/screenshots.vdf' -print0 \
-        | xargs -0 ls -1t 2>/dev/null \
-        | head -n1)
+  wlog "DESKTOP: patching fps → $DISPLAY_FPS"
+  sed -i "s|^fps=.*|fps=$DISPLAY_FPS|" "$CONF"
+  wlog "DESKTOP: launching Moonlight"
+  exec flatpak run com.moonlight_stream.Moonlight "$@"
+fi
 
-  LOG="$HOME/.steam/steam/logs/steamui_system.txt"
+# --- 6) Gaming mode functions ----------------------------------------------
+seed_fps(){
+  local last
+  last=$(
+    grep 'CGamescopeController: set app target framerate:' "$LOG" \
+      | tail -n1 \
+      | sed -E 's/.*: //' \
+      | tr -d '\r' \
+      | sed -E 's/[[:space:]]+$//'
+  )
+  # if nothing found, fall back to display FPS
+  printf '%s' "${last:-$DISPLAY_FPS}"
+}
 
-  if [[ ! -f "$VDF" ]]; then
-    echo "[E] screenshots.vdf not found" >&2
-    exit 1
-  fi
+patch_conf(){
+  wlog "PATCH: fps=$1"
+  sed -i "s|^fps=.*|fps=$1|" "$CONF"
+}
 
-  if [[ ! -f "$LOG" ]]; then
-    echo "[E] steamui_system.txt log not found" >&2
-    exit 1
-  fi
+kill_moonlight(){
+  wlog "KILL: Tearing down Moonlight for planned restart"
+  flatpak kill com.moonlight_stream.Moonlight &>/dev/null || true
+}
 
-  # Extract most recent Moonlight AppID
-  MOONID=$(grep -E '"[0-9]+"\s*"Moonlight"' "$VDF" \
-            | tail -n1 \
-            | sed -E 's/.*"([0-9]+)".*"Moonlight".*/\1/')
+launch_moonlight(){
+  local ctxt="$1"; shift
+  wlog "LAUNCH ($ctxt): starting Moonlight (fps=$CURRENT_FPS)"
+  flatpak run com.moonlight_stream.Moonlight "$@" &
+}
 
-  if [[ -z "$MOONID" ]]; then
-    echo "[E] Could not find any Moonlight appid in $VDF" >&2
-    exit 1
-  fi
+monitor_fps_changes(){
+  tail -n0 -F "$LOG" | while read -r line; do
+    if [[ "$line" =~ CGamescopeController:\ set\ app\ target\ framerate:\ ([0-9]+) ]]; then
+      echo "${BASH_REMATCH[1]}"
+      wlog "EVENT: SteamUI FPS cap → ${BASH_REMATCH[1]}"
+    fi
+  done
+}
 
-  echo "→ Latest Moonlight AppID = $MOONID"
+start_zombie_killer(){
+  (
+    while true; do
+      sleep 5
+      # If no bwrap sandboxes are alive, declare zombie state
+      if ! pgrep -x bwrap &>/dev/null; then
+        wlog "EVENT: Entered zombie state..."
+        wlog "CLEANUP: killing Moonlight flatpak"
+        pkill -f 'flatpak run com.moonlight_stream.Moonlight' &>/dev/null || true
+        wlog "CLEANUP: killing other Moonlight processes"
+        pkill -f moonlight                             &>/dev/null || true
+      fi
+    done
+  ) &
+  PERIODIC_DIAG_PID=$!
+  wlog "EVENT: Started anti-zombification protocol (PID=$PERIODIC_DIAG_PID)"
+}
 
-  # Find last framerate line while that AppID was active
-  FPS_LINE=$(awk -v GID="$MOONID" '
-    /Settings profile change: game:/ { active = ($0 ~ "Settings profile change: game: " GID) }
-    active && /CGamescopeController: set app target framerate:/ { last = $0 }
-    END { print last }
-  ' "$LOG")
+# --- 7) Gaming mode orchestration -------------------------------------------
+CURRENT_FPS=$(seed_fps)
+wlog "STATE: startup FPS = $CURRENT_FPS"
 
-  if [[ -z "$FPS_LINE" ]]; then
-    echo "[E] No framerate entries found for appid $MOONID in $LOG" >&2
-    FPS="$DISPLAY_FPS"
+patch_conf "$CURRENT_FPS"
+launch_moonlight initial "$@"
+start_zombie_killer
+
+monitor_fps_changes | while read -r CAP; do
+  if [[ "$CAP" != "$CURRENT_FPS" ]]; then
+    wlog "RESTART: $CURRENT_FPS → $CAP"
+    CURRENT_FPS="$CAP"
+    kill_moonlight
+    patch_conf "$CURRENT_FPS"
+    launch_moonlight restart "$@"
   else
-    echo "→ Log line: $FPS_LINE"
-    FPS="${FPS_LINE##*: }"
-    echo "→ Parsed FPS from log = $FPS"
+    wlog "IGNORE: duplicate cap = $CAP"
   fi
-fi
-
-# 4) Update Moonlight.conf
-CONF="$HOME/.var/app/com.moonlight_stream.Moonlight/config/Moonlight Game Streaming Project/Moonlight.conf"
-if [[ -f "$CONF" ]]; then
-  sed -i "s|^fps=.*|fps=$FPS|" "$CONF"
-  echo "→ Wrote fps=$FPS into $(basename "$CONF")"
-else
-  echo "[E] Moonlight.conf not found at $CONF" >&2
-  exit 1
-fi
-
-# 5) Launch Moonlight
-echo "Launching Moonlight…"
-exec flatpak run com.moonlight_stream.Moonlight "$@"
+ done
